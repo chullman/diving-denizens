@@ -50,3 +50,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "rspec-rails", "~> 5.1", :group => :development
 
 gem "factory_bot_rails", "~> 6.2", :group => :development
+
+gem "devise", "~> 4.8"
