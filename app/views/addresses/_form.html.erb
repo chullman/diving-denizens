@@ -1,0 +1,72 @@
+<%= form_with(model: address) do |form| %>
+  <% if address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+      <ul>
+        <% address.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :first_name %>
+    <%= form.text_field :first_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :last_name %>
+    <%= form.text_field :last_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :unit_type %>
+    <%= form.text_field :unit_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :unit_num %>
+    <%= form.number_field :unit_num %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lvl_type %>
+    <%= form.text_field :lvl_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lvl_num %>
+    <%= form.number_field :lvl_num %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_type %>
+    <%= form.text_field :street_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_num %>
+    <%= form.number_field :street_num %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_name %>
+    <%= form.text_field :street_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :suburb %>
+    <%= form.text_field :suburb %>
+  </div>
+
+  <div class="field">
+    <%= form.label :postcode_id %>
+    <%= form.text_field :postcode_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
