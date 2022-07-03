@@ -21,17 +21,24 @@ class AddressesController < ApplicationController
 
   # POST /addresses or /addresses.json
   def create
+    
+    @postcode = Postcode.new(:postcode => params[:postcode_id].to_i)
+    @postcode.state = "QLD"
+    @postcode.save
+    
     @address = Address.new(address_params)
+    
 
-    respond_to do |format|
-      if @address.save
-        format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
-        format.json { render :show, status: :created, location: @address }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @address.errors, status: :unprocessable_entity }
-      end
-    end
+    # respond_to do |format|
+    #   if @address.save
+    #     format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
+    #     format.json { render :show, status: :created, location: @address }
+    #   else
+    #     format.html { render :new, status: :unprocessable_entity }
+    #     format.json { render json: @address.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    
   end
 
   # PATCH/PUT /addresses/1 or /addresses/1.json

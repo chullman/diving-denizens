@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 2022_07_03_222127) do
     t.string "suburb"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "postcode"
+    t.integer "postcode_id"
   end
 
   create_table "postcodes", primary_key: "postcode", force: :cascade do |t|
@@ -91,5 +91,5 @@ ActiveRecord::Schema.define(version: 2022_07_03_222127) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "addresses", "postcodes", column: "postcode", primary_key: "postcode"
+  add_foreign_key "addresses", "postcodes", primary_key: "postcode"
 end
