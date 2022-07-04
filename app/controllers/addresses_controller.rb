@@ -90,9 +90,11 @@ class AddressesController < ApplicationController
     
     @postcode = Postcode.new(postcode_params)
 
-    @postcode.postcode = @address.postcode_id
-    
-    @postcode.save
+    if Postcode.find_by(postcode: @address.postcode_id).nil?
+      @postcode.postcode = @address.postcode_id
+      
+      @postcode.save
+    end
 
     respond_to do |format|
       if @address.save
@@ -115,12 +117,12 @@ class AddressesController < ApplicationController
       @postcode = Postcode.new(postcode_params)
 
       @postcode.postcode = params[:address][:postcode_id]
-      @postcode.state = params[:postcode][:state]
+      # @postcode.state = params[:postcode][:state]
       @postcode.save
     end
 
     respond_to do |format|
-      if @address.update(address_params) && @postcode.update(postcode_params)
+      if @address.update(address_params)
         format.html { redirect_to address_url(@address), notice: "Address was successfully updated." }
         format.json { render :show, status: :ok, location: @address }
       else
