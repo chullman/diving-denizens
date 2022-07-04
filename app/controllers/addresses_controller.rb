@@ -19,7 +19,16 @@ class AddressesController < ApplicationController
 
       if !(json_results.nil?) && json_results["messages"].empty?     
         
+        results_hash[:unit_type] = json_results["features"][0]["properties"]["complexUnitType"].to_s
+        results_hash[:unit_num] = json_results["features"][0]["properties"]["complexUnitNumber"].to_i
+        results_hash[:lvl_type] = json_results["parsedQuery"]["complexLevelType"].to_s
+        results_hash[:lvl_num] = json_results["parsedQuery"]["complexLevelNumber"].to_i
+        results_hash[:street_type] = json_results["features"][0]["properties"]["streetTypeDescription"].to_s
+        results_hash[:street_num] = json_results["features"][0]["properties"]["streetNumber1"].to_i
         results_hash[:street_name] = json_results["features"][0]["properties"]["streetName"].to_s
+        results_hash[:suburb] = json_results["features"][0]["properties"]["localityName"].to_s
+        results_hash[:state] = json_results["features"][0]["properties"]["stateTerritory"].to_s
+        results_hash[:postcode_id] = json_results["features"][0]["properties"]["postcode"].to_i
         
       end
     end
@@ -45,8 +54,22 @@ class AddressesController < ApplicationController
       found_address = find_address(@address)
 
       @address = Address.new(
-        street_name: found_address[:street_name].to_s
+        street_name: found_address[:street_name].to_s,
+        unit_type: found_address[:unit_type].to_s,
+
+        lvl_type: found_address[:lvl_type].to_s,
+
+        street_type: found_address[:street_type].to_s,
+        street_num: found_address[:street_num].to_i,
+        street_name: found_address[:street_name].to_s,
+        suburb: found_address[:suburb].to_s,
+        postcode_id: found_address[:postcode_id].to_i
       )
+
+      @state_prepop = found_address[:state].to_s
+
+      @address.unit_num = found_address[:unit_num].to_i if found_address[:unit_num].to_i != 0
+      @address.lvl_num = found_address[:lvl_num].to_i if found_address[:lvl_num].to_i != 0
 
     else
       @address = Address.new

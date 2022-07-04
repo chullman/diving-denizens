@@ -30,7 +30,7 @@ module AddressesHelper
             logger.debug "redirected to #{location}"
             fetch(location, limit - 1)
         else
-            response.value
+            response.body
         end
     end
 

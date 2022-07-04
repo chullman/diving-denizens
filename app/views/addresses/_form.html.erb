@@ -71,7 +71,11 @@
 
   <%= fields_for :postcode, @postcode do |postcode_form| %>
     <%= postcode_form.label :state %>
-    <%= postcode_form.text_field :state %>
+    <% if !@state_prepop.nil? && !@state_prepop.empty?%>
+      <%= postcode_form.text_field :state, value: @state_prepop.to_s %>
+    <% else %>
+      <%= postcode_form.text_field :state %>
+    <% end %>
   <% end %>
 
   <div class="field">
