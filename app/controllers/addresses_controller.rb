@@ -1,9 +1,10 @@
 class AddressesController < ApplicationController
-  before_action :set_address, only: %i[ show edit update ]
+  before_action :get_existing_address, only: %i[ show edit update find_address ]
 
-  def find_address(address)
+  def find_address
 
-    params.permit(:query, :commit)
+    params.permit(:query, :commit, :id)
+
     query = params[:query]
 
     results_hash = {}
@@ -32,7 +33,14 @@ class AddressesController < ApplicationController
         
       end
     end
-    return results_hash
+  
+
+    if !(params[:id].nil?)
+      redirect_to edit_address_path(id: params[:id], results_hash: results_hash)
+    else
+      
+      redirect_to new_address_path(results_hash: results_hash)
+    end
 
   end
 
@@ -49,38 +57,52 @@ class AddressesController < ApplicationController
   # GET /addresses/new
   def new
 
-    if !(params[:query].nil?)
-
-      found_address = find_address(@address)
+    if !params[:results_hash].nil?
 
       @address = Address.new(
-        street_name: found_address[:street_name].to_s,
-        unit_type: found_address[:unit_type].to_s,
+        unit_type: params[:results_hash][:unit_type].to_s,
 
-        lvl_type: found_address[:lvl_type].to_s,
+        lvl_type: params[:results_hash][:lvl_type].to_s,
 
-        street_type: found_address[:street_type].to_s,
-        street_num: found_address[:street_num].to_i,
-        street_name: found_address[:street_name].to_s,
-        suburb: found_address[:suburb].to_s,
-        postcode_id: found_address[:postcode_id].to_i
+        street_type: params[:results_hash][:street_type].to_s,
+        street_num: params[:results_hash][:street_num].to_i,
+        street_name: params[:results_hash][:street_name].to_s,
+        suburb: params[:results_hash][:suburb].to_s,
+        postcode_id: params[:results_hash][:postcode_id].to_i
       )
 
-      @state_prepop = found_address[:state].to_s
+      @state_prepop = params[:results_hash][:state].to_s
 
-      @address.unit_num = found_address[:unit_num].to_i if found_address[:unit_num].to_i != 0
-      @address.lvl_num = found_address[:lvl_num].to_i if found_address[:lvl_num].to_i != 0
-
+      @address.unit_num = params[:results_hash][:unit_num].to_i if params[:results_hash][:unit_num].to_i != 0
+      @address.lvl_num = params[:results_hash][:lvl_num].to_i if params[:results_hash][:lvl_num].to_i != 0
     else
       @address = Address.new
     end
-    
 
   end
 
   # GET /addresses/1/edit
   def edit
     @postcode = Postcode.find_by(postcode: @address.postcode_id)
+
+    if !params[:results_hash].nil?
+
+      @address.unit_type = params[:results_hash][:unit_type].to_s
+
+      @address.lvl_type = params[:results_hash][:lvl_type].to_s
+
+      @address.street_type = params[:results_hash][:street_type].to_s
+      @address.street_num = params[:results_hash][:street_num].to_i
+      @address.street_name = params[:results_hash][:street_name].to_s
+      @address.suburb = params[:results_hash][:suburb].to_s
+      @address.postcode_id = params[:results_hash][:postcode_id].to_i
+
+      @state_prepop = params[:results_hash][:state].to_s
+
+      @address.unit_num = params[:results_hash][:unit_num].to_i if params[:results_hash][:unit_num].to_i != 0
+      @address.lvl_num = params[:results_hash][:lvl_num].to_i if params[:results_hash][:lvl_num].to_i != 0
+    end
+
   end
 
   # POST /addresses or /addresses.json
@@ -135,8 +157,10 @@ class AddressesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_address
-      @address = Address.find(params[:id])
+    def get_existing_address
+      if !(params[:id].nil?) && !(params[:id].empty?)
+        @address = Address.find(params[:id]) 
+      end
     end
 
     # Only allow a list of trusted parameters through.

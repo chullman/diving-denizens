@@ -1,5 +1,8 @@
 <%= form_with(url: query_for_address_path, method: "get") do |form| %>
 
+  <% if !params[:id].nil? %>
+    <%= hidden_field_tag(:id, params[:id])%>
+  <% end %>
   <%= form.label :query, "Find address:" %>
   <%= form.text_field :query %>
   <%= form.submit "Find Address" %>
