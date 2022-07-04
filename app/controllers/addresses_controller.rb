@@ -21,12 +21,17 @@ class AddressesController < ApplicationController
 
   # POST /addresses or /addresses.json
   def create
+
+    @address = Address.new(address_params)
     
-    @postcode = Postcode.new(:postcode => params[:postcode_id].to_i)
+    @postcode = Postcode.new
+    @postcode.postcode = @address.postcode_id
     @postcode.state = "QLD"
     @postcode.save
+
+    logger.info "Postcode"
     
-    @address = Address.new(address_params)
+    #@address = Address.new(address_params)
     
 
     # respond_to do |format|
