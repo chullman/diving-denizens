@@ -1,6 +1,32 @@
 class AddressesController < ApplicationController
   before_action :set_address, only: %i[ show edit update ]
 
+  def find_address(address)
+
+    params.permit(:query, :commit)
+    query = params[:query]
+
+    results_hash = {}
+    
+    if !query.nil?
+      uri = URI("https://api.psma.com.au/v2/addresses/geocoder?address=#{query}")
+      header_key = "Authorization"
+      header_value = Rails.application.credentials.geoscape[:consumer_key]
+
+      results = helpers.fetch(uri, header_key, header_value)
+
+      json_results = helpers.try_parse_json(results)
+
+      if !(json_results.nil?) && json_results["messages"].empty?     
+        
+        results_hash[:street_name] = json_results["features"][0]["properties"]["streetName"].to_s
+        
+      end
+    end
+    return results_hash
+
+  end
+
   # GET /addresses or /addresses.json
   def index
     @addresses = Address.all
@@ -13,7 +39,19 @@ class AddressesController < ApplicationController
 
   # GET /addresses/new
   def new
-    @address = Address.new
+
+    if !(params[:query].nil?)
+
+      found_address = find_address(@address)
+
+      @address = Address.new(
+        street_name: found_address[:street_name].to_s
+      )
+
+    else
+      @address = Address.new
+    end
+    
 
   end
 
