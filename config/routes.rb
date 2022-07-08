@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
 
+  root 'pages#home'
+
   get '/addresses/find_address', to: 'addresses#find_address', as: 'query_for_address'
   resources :addresses
   devise_for :users
-  root 'pages#home'
+  
 
   
   
