@@ -25,6 +25,10 @@
                           </div>
 
                           <div class="mb-3">
+                            <%= f.text_field :username, class: "form-control", placeholder: "Username (must be unique)" %>
+                          </div>
+
+                          <div class="mb-3">
                             <% if @minimum_password_length %>
                             <em>(<%= @minimum_password_length %> characters minimum)</em>
                             <% end %><br />
