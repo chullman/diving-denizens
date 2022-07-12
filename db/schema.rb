@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2022_07_12_080146) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "postcode_id"
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
