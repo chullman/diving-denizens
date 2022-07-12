@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :get_existing_address, only: %i[ show edit update find_address ]
+  
 
   def find_address
 
@@ -118,6 +119,12 @@ class AddressesController < ApplicationController
       @postcode.save
     end
 
+    if user_signed_in?
+      @address.user_id = current_user.id
+    else
+      @address.user_id = nil
+    end
+
     respond_to do |format|
       if @address.save
         format.html { redirect_to address_url(@address), notice: "Address was successfully created." }
@@ -143,8 +150,11 @@ class AddressesController < ApplicationController
       @postcode.save
     end
 
+    attributes = address_params.clone
+    attributes[:user_id] = set_user_id_if_exists
+
     respond_to do |format|
-      if @address.update(address_params)
+      if @address.update(attributes)
         format.html { redirect_to address_url(@address), notice: "Address was successfully updated." }
         format.json { render :show, status: :ok, location: @address }
       else
@@ -163,9 +173,18 @@ class AddressesController < ApplicationController
       end
     end
 
+    def set_user_id_if_exists
+      if user_signed_in?
+        return current_user.id
+      else
+        return nil
+      end
+    end
+
+
     # Only allow a list of trusted parameters through.
     def address_params
-      params.require(:address).permit(:first_name, :last_name, :unit_type, :unit_num, :lvl_type, :lvl_num, :street_type, :street_num, :street_name, :suburb, :postcode_id)
+      params.require(:address).permit(:first_name, :last_name, :unit_type, :unit_num, :lvl_type, :lvl_num, :street_type, :street_num, :street_name, :suburb, :postcode_id, :user_id)
     end
 
     def postcode_params
