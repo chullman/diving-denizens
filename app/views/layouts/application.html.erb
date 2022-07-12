@@ -13,15 +13,17 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-
+    
 
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
     <%= render 'shared/nav' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="container">
+      <p class="alert-primary mx-auto row d-flex justify-content-center h5"><%= notice %></p>
+      <p class="alert-danger mx-auto row d-flex justify-content-center h5"><%= alert %></p>
+    </div>
     <%= yield %>
   </body>
 </html>
