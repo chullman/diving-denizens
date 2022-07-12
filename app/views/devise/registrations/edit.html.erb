@@ -20,6 +20,8 @@
                           </div>
                           
                           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "text-center" }) do |f| %>
+
+                            <%= f.hidden_field :address, value: nil %>
                             
                             <div class="mb-3">
                               <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", placeholder: "Email" %>
