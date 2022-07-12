@@ -26,7 +26,8 @@
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
+# COMMENTING THIS OUT FOR THE SAKE OF THE ASSIGNMENT
+#/config/master.key
 
 /public/packs
 /public/packs-test
@@ -35,6 +36,6 @@
 yarn-debug.log*
 .yarn-integrity
 
-/config/master.key
+#/config/master.key
 
 /config/credentials/global.key
