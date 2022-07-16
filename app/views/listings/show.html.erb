@@ -12,9 +12,15 @@
 
 <p>
   <strong>Images:</strong>
-  <% @listing.images.each do |image| %>
-    <div><%= link_to image.filename, image %></div>
+  <% if @listing.images.attached? %>
+    <% @listing.images.each do |image| %>
+      <!--<div><%= link_to image.filename, image %></div>-->
+      <%= image_tag image, alt: @listing.title + " image preview" %>
+    <% end %>
+  <% else %>
+    <%= image_tag "https://placekitten.com/400/500", alt: "Placeholder image" %>
   <% end %>
+  
 </p>
 
 <p>
