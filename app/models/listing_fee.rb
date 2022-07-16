@@ -1,0 +1,2 @@
+class ListingFee < ApplicationRecord
+end

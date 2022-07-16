@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_12_215157) do
+ActiveRecord::Schema.define(version: 2022_07_16_004039) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,33 @@ ActiveRecord::Schema.define(version: 2022_07_12_215157) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "listing_fees", force: :cascade do |t|
+    t.decimal "fee_price"
+    t.datetime "valid_from"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "listings", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.decimal "outright_price"
+    t.boolean "negotiable"
+    t.integer "quantity"
+    t.boolean "deliverable"
+    t.bigint "listing_fee_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["listing_fee_id"], name: "index_listings_on_listing_fee_id"
+    t.index ["user_id"], name: "index_listings_on_user_id"
+  end
+
   create_table "postcodes", primary_key: "postcode", force: :cascade do |t|
     t.string "state"
     t.datetime "created_at", precision: 6, null: false
@@ -111,6 +138,8 @@ ActiveRecord::Schema.define(version: 2022_07_12_215157) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "postcodes", primary_key: "postcode"
   add_foreign_key "addresses", "users"
+  add_foreign_key "listings", "listing_fees"
+  add_foreign_key "listings", "users"
   add_foreign_key "user_roles", "roles"
   add_foreign_key "user_roles", "users"
 end
