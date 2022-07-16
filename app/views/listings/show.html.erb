@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>User:</strong>
-  <%= @listing.user_id %>
-</p>
-
-<p>
   <strong>Title:</strong>
   <%= @listing.title %>
 </p>
@@ -44,7 +39,7 @@
 
 <p>
   <strong>Listing fee:</strong>
-  <%= @listing.listing_fee_id %>
+  $<%= number_with_precision(@listing.listing_fee.fee_price, precision: 2) %>
 </p>
 
 <%= link_to 'Edit', edit_listing_path(@listing) %> |

@@ -17,9 +17,8 @@
             </svg></span><span>Diving Denizens</span></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navcol-1">
         <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link active" href="#">Buy</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Sell</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            <li class="nav-item"><%= link_to "Buy", listings_path, method: :get, class: "nav-link active" %></li>
+            <li class="nav-item"><%= link_to "Sell", new_listing_path, method: :get, class: "nav-link" %></li>
         </ul>
         <% if user_signed_in? %>
             <p class="lead" style="margin-bottom:0;">Hi, <%=current_user.username%>!</p>
