@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :listings
   root 'pages#home'
 
   get '/addresses/find_address', to: 'addresses#find_address', as: 'query_for_address'

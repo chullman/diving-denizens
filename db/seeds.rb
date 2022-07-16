@@ -23,3 +23,4 @@ UserRole.create!(role_id: admin_role.id, user_id: admin_test_user.id)
 
 Category.create!([{ name: "wetsuit" }, { name: "bcd" }, { name: "mask" }, { name: "snorkel" }, { name: "fins" }, { name: "regulators" }, { name: "computer" }, { name: "spg" }])
 
+ListingFee.create!(fee_price: 0.30, valid_from: Time.now.to_datetime)

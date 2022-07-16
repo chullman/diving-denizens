@@ -1,0 +1,62 @@
+<%= form_with(model: listing) do |form| %>
+  <% if listing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+      <ul>
+        <% listing.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.rich_text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :outright_price %>
+    <%= form.text_field :outright_price %>
+  </div>
+
+  <div class="field">
+    <%= form.label :negotiable %>
+    <%= form.check_box :negotiable %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :deliverable %>
+    <%= form.check_box :deliverable %>
+  </div>
+
+  <div class="field">
+    <%= form.label :listing_fee_id %>
+    <%= form.text_field :listing_fee_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
