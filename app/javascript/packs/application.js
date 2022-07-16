@@ -15,6 +15,13 @@ ActiveStorage.start()
 require("trix")
 require("@rails/actiontext")
 
+// prevents attachments on the Trix rich text editor:
+// Reference from: https://github.com/basecamp/trix/issues/604 (viewed: 16/07/2022)
+document.addEventListener("trix-file-accept", function(event) {
+    alert("Sorry, no attachments allowed within the Description field.");
+    event.preventDefault();
+});
+
 require("@popperjs/core")
 
 // import the bootstrap javascript module

@@ -1,3 +1,10 @@
 .alert {
     padding: 0;
 }
+
+
+// prevents attachments icon on the Trix rich text editor:
+// Reference from: https://github.com/basecamp/trix/issues/604 (viewed: 16/07/2022)
+.trix-button-group.trix-button-group--file-tools {
+    display:none;
+}
