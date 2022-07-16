@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   before_action :get_existing_address, only: %i[ show edit update find_address ]
+  before_action :authenticate_user!, only: %i[ new show edit update ]
   
 
   def find_address
