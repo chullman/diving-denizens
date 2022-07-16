@@ -29,7 +29,7 @@ class ListingsController < ApplicationController
 
     @listing.user_id = current_user.id
 
-    @current_listing_fee = ListingFee.all.order(valid_from: :asc).first
+    @current_listing_fee = ListingFee.all.order(valid_from: :desc).first
     @listing.listing_fee = @current_listing_fee
 
   
