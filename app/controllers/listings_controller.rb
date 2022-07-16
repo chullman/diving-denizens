@@ -15,6 +15,8 @@ class ListingsController < ApplicationController
   # GET /listings/new
   def new
     @listing = Listing.new
+
+    @categories = Category.all
   end
 
   # GET /listings/1/edit
@@ -30,8 +32,16 @@ class ListingsController < ApplicationController
     @current_listing_fee = ListingFee.all.order(valid_from: :asc).first
     @listing.listing_fee = @current_listing_fee
 
+  
     respond_to do |format|
       if @listing.save
+        
+        (params[:category][:name]).each do |cat|
+          if !cat.empty?
+            ListingCategory.create!(listing_id: @listing.id, category_id: Category.find_by!(name: cat).id)
+          end
+        end
+
         format.html { redirect_to listing_url(@listing), notice: "Listing was successfully created." }
         format.json { render :show, status: :created, location: @listing }
       else

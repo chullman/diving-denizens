@@ -21,6 +21,6 @@ UserRole.create(role_id: normal_role.id, user_id: normal_test_user.id)
 UserRole.create!(role_id: normal_role.id, user_id: admin_test_user.id)
 UserRole.create!(role_id: admin_role.id, user_id: admin_test_user.id)
 
-Category.create!([{ name: "wetsuit" }, { name: "bcd" }, { name: "mask" }, { name: "snorkel" }, { name: "fins" }, { name: "regulators" }, { name: "computer" }, { name: "spg" }])
+Category.create!([{ name: "Wetsuit" }, { name: "BCD" }, { name: "Mask" }, { name: "Snorkel" }, { name: "Fins" }, { name: "Regulators" }, { name: "Dive Computer" }, { name: "SPG" }])
 
 ListingFee.create!(fee_price: 0.30, valid_from: Time.now.to_datetime)

@@ -5,7 +5,7 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
+      <th>Seller</th>
       <th>Title</th>
       <th>Description</th>
       <th>Images</th>
@@ -21,7 +21,7 @@
   <tbody>
     <% @listings.each do |listing| %>
       <tr>
-        <td><%= listing.user_id %></td>
+        <td><%= listing.user.username %></td>
         <td><%= listing.title %></td>
         <td><%= listing.description %></td>
         <td><%= listing.images %></td>
