@@ -1,6 +1,7 @@
 class AddressesController < ApplicationController
   before_action :get_existing_address, only: %i[ show edit update find_address ]
   before_action :authenticate_user!, only: %i[ new show edit update ]
+  before_action :authorize_user, only: %i[edit update ]
   
 
   def find_address
@@ -182,6 +183,12 @@ class AddressesController < ApplicationController
       end
     end
 
+    def authorize_user
+      if @address.user_id != current_user.id && current_user.roles.name != "admin"
+        flash[:alert] = "You are not authorised to do that!"
+        redirect_to root_path
+      end
+    end
 
     # Only allow a list of trusted parameters through.
     def address_params

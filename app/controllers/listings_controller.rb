@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
   before_action :set_listing, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ new edit update destroy ]
+  before_action :authorize_user, only: %i[edit update destroy]
 
   # GET /listings or /listings.json
   def index
@@ -67,6 +68,13 @@ class ListingsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_listing
       @listing = Listing.find(params[:id])
+    end
+
+    def authorize_user
+      if @listing.user_id != current_user.id && current_user.roles.name != "admin"
+        flash[:alert] = "You are not authorised to do that!"
+        redirect_to root_path
+      end
     end
 
     # Only allow a list of trusted parameters through.
