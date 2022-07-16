@@ -54,3 +54,5 @@ gem "factory_bot_rails", "~> 6.2", :group => :development
 gem "devise", "~> 4.8"
 
 gem "activestorage-validator", "~> 0.2.2"
+
+gem "aws-sdk-s3", "~> 1.114"
