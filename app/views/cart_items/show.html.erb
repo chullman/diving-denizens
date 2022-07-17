@@ -12,6 +12,7 @@
             <h4>There are no items in your cart.</h4>
           <% else %>
             <% item_count = 1 %>
+            <% total_cost = 0.00 %>
             <% @cart_items.each do |cart_item| %>
               <h5>Item #<%= item_count %></h5>
               <div>
@@ -22,12 +23,21 @@
                   <strong>Seller:</strong>
                   <%= cart_item.listing.user.username %>
               </div>
+              <div>
+                  <strong>Price:</strong>
+                  <strong>$<%= number_with_precision(cart_item.listing.outright_price, precision: 2) %></strong>
+                  <% total_cost += cart_item.listing.outright_price %>
+              </div>
               <% item_count += 1 %>
               <br/>
             <% end %>
             <br/>
-            <strong>Total delivery fee from <%= @count_of_sellers.to_s %> seller(s)</strong>
+            <strong>Total delivery fee from <%= @count_of_sellers.to_s %> seller(s):</strong>
             <strong>$<%= number_with_precision(@total_delivery_cost, precision: 2) %></strong>
+            <br/>
+            <br/>
+            <strong>Total cost + delivery: </strong>
+            <strong>$<%= number_with_precision((total_cost + @total_delivery_cost), precision: 2) %></strong>
             <br/>
             <%= button_to 'Clear Cart', clear_cart_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
           <% end %>
