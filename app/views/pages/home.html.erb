@@ -29,20 +29,26 @@
             </div>
 
             <% @listings.limit(3).each do |listing| %>
-
                 <div class="col order-md-2">
                 <% if listing.images.attached? %>
-                    <div class="card"><%= image_tag listing.images.first, class: "card-img w-100 d-block" %>
+                    <%= link_to listing, action: 'get' do %>
+                        <div class="card"><%= image_tag(listing.images.first, class: "card-img w-100 d-block")%>
+                            <div class="card-img-overlay text-center d-flex flex-column justify-content-center align-items-center p-4">
+                                <h4 class="text-white bg-dark"><%= listing.title.truncate(20) %></h4>
+                                <p class="text-white bg-dark"><%= listing.description.body.to_plain_text.truncate(50) %></p>
+                            </div>
+                        </div>
+                    <% end %>
                 <% else %>
                     <div class="card"><img class="card-img w-100 d-block" src="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
-                <% end %>
                         <div class="card-img-overlay text-center d-flex flex-column justify-content-center align-items-center p-4">
-                            <h4 class="text-white bg-dark"><%= listing.title.truncate(20) %></h4>
-                            <p class="text-white bg-dark"><%= listing.description.body.to_plain_text %></p>
+                                <h4 class="text-white bg-dark"><%= listing.title.truncate(20) %></h4>
+                                <p class="text-white bg-dark"><%= listing.description.body.to_plain_text.truncate(50) %></p>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                <% end %>
 
+                </div>
             <% end %>
 
 
