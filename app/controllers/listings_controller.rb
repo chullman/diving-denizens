@@ -33,6 +33,8 @@ class ListingsController < ApplicationController
 
   # GET /listings/1/edit
   def edit
+    @categories = Category.all
+    @current_categories = @listing.categories
   end
 
   # POST /listings or /listings.json
@@ -67,6 +69,17 @@ class ListingsController < ApplicationController
   def update
     respond_to do |format|
       if @listing.update(listing_params)
+
+        # I know this isn't ideal, but I couldn't figure out how to use update in this instance for multiple possible categories on a relationship table
+
+        ListingCategory.destroy_by(listing_id: @listing.id)
+
+        (params[:category][:name]).each do |cat|
+          if !cat.empty?
+            ListingCategory.create(listing_id: @listing.id, category_id: Category.find_by!(name: cat).id)
+          end
+        end
+
         format.html { redirect_to listing_url(@listing), notice: "Listing was successfully updated." }
         format.json { render :show, status: :ok, location: @listing }
       else

@@ -1,62 +1,96 @@
-<%= form_with(model: listing) do |form| %>
-  <% if listing.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
 
-      <ul>
-        <% listing.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+
+  <%= form_with(model: listing) do |form| %>
+    <% if listing.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+        <ul>
+          <% listing.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title, size: "100" %>
+    </div>
+
+
+    <%= fields_for :category, @categories do |categories_form| %>
+      <%= categories_form.collection_check_boxes(:name, @categories, :name, :name) do |b| %>
+        <% cat_found = false %>
+        <div class="row">
+          <div class="col-sm-3">
+            <%= b.label %>
+          </div>
+          <div class="col-sm">
+            
+            <% @current_categories.each do |current_cat| %>
+              <% if b.value == current_cat.name %>
+                <%= b.check_box(checked: true) %>
+                <% cat_found = true %>
+              <%end%>
+            <% end %>
+            <% if cat_found == false %>
+              <%= b.check_box %>
+            <% end %>
+          </div>
+
+        </div>
+      <% end %>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :description %>
+      <%= form.rich_text_area :description %>
+    </div>
+
+    <div class="field">
+      <%= form.label :images %>
+      <%= form.file_field :images, multiple: true, accept: "image/png,image/jpg,image/jpeg" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :outright_price %>
+      <%= form.text_field :outright_price %>
+    </div>
+
+  <!--
+
+  I ran out of time to manage this, so the value of this param will be hardcoded in the controller as True
+
+    <div class="field">
+      <%= form.label :negotiable %>
+      <%= form.check_box :negotiable %>
+    </div>
+  -->
+
+  <!--
+
+  I ran out of time to manage this, so the value of this param will be hardcoded in the controller as True
+
+    <div class="field">
+      <%= form.label :quantity %>
+      <%= form.number_field :quantity %>
+    </div>
+  -->
+
+  <!--
+
+  I ran out of time to manage this, so the value of this param will be hardcoded in the controller as True
+
+    <div class="field">
+      <%= form.label :deliverable %>
+      <%= form.check_box :deliverable %>
+    </div>
+  -->
+
+
+    <div class="actions">
+      <%= form.submit %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
-
-  <%= fields_for :category, @categories do |categories_form| %>
-    <%= categories_form.collection_check_boxes(:name, @categories, :name, :name) do |b| %>
-      <span>
-        <%= b.label %>
-        <%= b.check_box %>
-      </span>
-    <% end %>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.rich_text_area :description %>
-  </div>
-
-  <div class="field">
-    <%= form.label :images %>
-    <%= form.file_field :images, multiple: true, accept: "image/png,image/jpg,image/jpeg" %>
-  </div>
-
-  <div class="field">
-    <%= form.label :outright_price %>
-    <%= form.text_field :outright_price %>
-  </div>
-
-  <div class="field">
-    <%= form.label :negotiable %>
-    <%= form.check_box :negotiable %>
-  </div>
-
-  <div class="field">
-    <%= form.label :quantity %>
-    <%= form.number_field :quantity %>
-  </div>
-
-  <div class="field">
-    <%= form.label :deliverable %>
-    <%= form.check_box :deliverable %>
-  </div>
-
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>

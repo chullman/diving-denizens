@@ -4,7 +4,7 @@ class Listing < ApplicationRecord
   has_rich_text :description
   has_many_attached :images
 
-  has_many :listing_categories
+  has_many :listing_categories, dependent: :destroy 
   has_many :categories, through: :listing_categories
 
   # Uses 'activestorage-validator' gem

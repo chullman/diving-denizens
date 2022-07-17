@@ -21,9 +21,11 @@
   <body>
     <%= render 'shared/nav' %>
     <div class="container">
-      <p class="alert-primary mx-auto row d-flex justify-content-center h5"><%= notice %></p>
-      <p class="alert-danger mx-auto row d-flex justify-content-center h5"><%= alert %></p>
+      <p id="notice" class="alert-primary mx-auto row d-flex justify-content-center h5"><%= notice %></p>
+      <p id="alert" class="alert-danger mx-auto row d-flex justify-content-center h5"><%= alert %></p>
     </div>
     <%= yield %>
+    <%= render 'shared/footer' %>
+    <%= javascript_pack_tag 'bs-init', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>
