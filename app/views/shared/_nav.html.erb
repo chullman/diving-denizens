@@ -12,6 +12,7 @@
         </ul>
         <% if user_signed_in? %>
             <p class="lead" style="margin-bottom:0;">Hi, <%=current_user.username%>!</p>
+            <%= button_to "View Cart", show_cart_path, method: :get, class: "btn btn-primary", style: "margin-left: 10px; margin-right: 10px;" %>
             <% if !current_user.address.present? %> 
                 <%= button_to "Complete Profile", new_address_path, method: :get, class: "btn btn-primary", style: "margin-left: 10px; margin-right: 10px;" %>
             <%elsif current_user.address.present?%>

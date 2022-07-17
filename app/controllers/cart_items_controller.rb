@@ -1,6 +1,6 @@
 class CartItemsController < ApplicationController
   #before_action :set_cart_item, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[ show destroy ]
+  before_action :authenticate_user!, only: %i[ show_cart destroy ]
 
   # GET /cart_items or /cart_items.json
   # def index
@@ -8,8 +8,25 @@ class CartItemsController < ApplicationController
   # end
 
   # GET /cart_items/1 or /cart_items/1.json
-  def show
+  def show_cart
     @cart_items = CartItem.where(user_id: current_user.id)
+
+    # Because the user's cart may contain items from more than one seller
+    # we need to calculate how many different sellers the buyer is buying from in the one cart order
+    # so that we can calculate the correct delivery cost
+    all_sellers_in_cart = []
+
+    @cart_items.each do |cart_item|
+      all_sellers_in_cart.push(cart_item.listing.user.id)
+    end
+
+    all_sellers_in_cart.uniq!
+
+    @count_of_sellers = all_sellers_in_cart.length
+
+    @total_delivery_cost = DeliveryFee.all.first.fee_price * @count_of_sellers
+
+    render "show"
   end
 
   # GET /cart_items/new

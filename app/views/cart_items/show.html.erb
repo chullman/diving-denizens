@@ -1,24 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="container py-4 py-xl-5">
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col d-flex flex-column justify-content-start p-4">
+        <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start mb-5">
+          <div>
+              <h4>Cart Items For:</h4>
+              <h5><%= current_user.username %></h5>
+          </div>
+          <br/>
+          <br/>
+          <% if @cart_items.blank? %>
+            <h4>There are no items in your cart.</h4>
+          <% else %>
+            <% item_count = 1 %>
+            <% @cart_items.each do |cart_item| %>
+              <h5>Item #<%= item_count %></h5>
+              <div>
+                  <strong>Item:</strong>
+                  <%= cart_item.listing.title.truncate(100) %>
+              </div>
+              <div>
+                  <strong>Seller:</strong>
+                  <%= cart_item.listing.user.username %>
+              </div>
+              <% item_count += 1 %>
+              <br/>
+            <% end %>
+            <br/>
+            <strong>Total delivery fee from <%= @count_of_sellers.to_s %> seller(s)</strong>
+            <strong>$<%= number_with_precision(@total_delivery_cost, precision: 2) %></strong>
+          <% end %>
+          
+          
+      </div>
+    </div>
+  </div>
+  <%= link_to 'Back', root_path %>
+</div>
 
-<p>
-  <strong>User:</strong>
-  <%= @cart_item.user_id %>
-</p>
 
-<p>
-  <strong>Listing:</strong>
-  <%= @cart_item.listing_id %>
-</p>
 
-<p>
-  <strong>Cart num:</strong>
-  <%= @cart_item.cart_num %>
-</p>
-
-<p>
-  <strong>Delivery fee:</strong>
-  <%= @cart_item.delivery_fee_id %>
-</p>
-
-<%= link_to 'Edit', edit_cart_item_path(@cart_item) %> |
-<%= link_to 'Back', root_path %>
