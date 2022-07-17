@@ -23,6 +23,8 @@ UserRole.create!(role_id: admin_role.id, user_id: admin_test_user.id)
 
 Category.create!([{ name: "Wetsuit" }, { name: "BCD" }, { name: "Mask" }, { name: "Snorkel" }, { name: "Fins" }, { name: "Regulators" }, { name: "Dive Computer" }, { name: "SPG" }])
 
+categories = Category.all
+
 current_listing_fee = ListingFee.create!(fee_price: 0.30, valid_from: Time.now.to_datetime)
 
 # Create seed Listings with ActionText and ActiveStorage seed data:
@@ -37,6 +39,8 @@ listing_wetsuit = Listing.create!(
     quantity: 1,
     deliverable: true,
     listing_fee_id: current_listing_fee.id)
+
+ListingCategory.create!(listing_id: listing_wetsuit.id, category_id: categories.find_by(name: "Wetsuit").id)
 
 # Reference: https://linuxtut.com/rails6-input-the-initial-data-of-actiontext-using-seed-9b4f2/ (viewed 17//07/2022) 
 # on how to seed a "rich text" Trix field via ActionText
@@ -66,7 +70,10 @@ listing_mask = Listing.create!(
     deliverable: true,
     listing_fee_id: current_listing_fee.id)
 
-rich_text_content = '<div class="trix-content"><div><p>Great for small faces!</p><br><strong>Great condition, and does not fog!</strong></div></div>'
+ListingCategory.create!(listing_id: listing_mask.id, category_id: categories.find_by(name: "Mask").id)
+ListingCategory.create!(listing_id: listing_mask.id, category_id: categories.find_by(name: "Snorkel").id)
+
+rich_text_content = '<div class="trix-content"><div><p>Great for small faces!</p><strong> SNORKEL INCLUDED!</strong><br><strong>Great condition, and does not fog!</strong></div></div>'
 
 new_rich_text = ActionText::RichText.create!(record_type: 'Listing', 
                             record_id: listing_mask.id, 
@@ -88,6 +95,8 @@ listing_computer = Listing.create!(
     quantity: 1,
     deliverable: true,
     listing_fee_id: current_listing_fee.id)
+
+ListingCategory.create!(listing_id: listing_computer.id, category_id: categories.find_by(name: "Dive Computer").id)
 
 rich_text_content = '<div class="trix-content"><div><strong>Small in size and easy to read!</strong></div></div>'
 

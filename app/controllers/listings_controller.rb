@@ -5,7 +5,19 @@ class ListingsController < ApplicationController
 
   # GET /listings or /listings.json
   def index
+
     @listings = Listing.all
+
+    if !params.nil? && params[:search].present?
+      # ILIKE for case-insensitive search in postgresql
+      # Note that we're running two search queries here:
+      # The first one is to pattern match the search string param with every Listing title attribute
+      # The second one is to pattern match the search string param with the name of every Listing's category relationship, hench why the SQL join is required
+      # then we concatenate all the Listing results together and drop any (uniq!) duplicate found records resulting from both queries
+      @listings = Listing.where("title ILIKE ?", "%" + params[:search].strip + "%") + Listing.joins(:categories).where("categories.name ILIKE ?", "%" + params[:search].strip + "%")
+      @listings.uniq!
+    end
+    
   end
 
   # GET /listings/1 or /listings/1.json
