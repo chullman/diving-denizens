@@ -28,11 +28,13 @@
           </div>
           <div class="col-sm">
             
-            <% @current_categories.each do |current_cat| %>
-              <% if b.value == current_cat.name %>
-                <%= b.check_box(checked: true) %>
-                <% cat_found = true %>
-              <%end%>
+            <% if !@current_categories.nil? %>
+              <% @current_categories.each do |current_cat| %>
+                <% if b.value == current_cat.name %>
+                  <%= b.check_box(checked: true) %>
+                  <% cat_found = true %>
+                <%end%>
+              <% end %>
             <% end %>
             <% if cat_found == false %>
               <%= b.check_box %>
