@@ -67,11 +67,13 @@ class CartItemsController < ApplicationController
   # end
 
   # DELETE /cart_items/1 or /cart_items/1.json
-  def destroy
-    @cart_item.destroy
+  def clear_cart
+    @cart_items = CartItem.where(user_id: current_user.id)
+
+    @cart_items.delete_all
 
     respond_to do |format|
-      format.html { redirect_to cart_items_url, notice: "Cart item was successfully destroyed." }
+      format.html { redirect_to root_path, notice: "Cart was successfully cleared." }
       format.json { head :no_content }
     end
   end

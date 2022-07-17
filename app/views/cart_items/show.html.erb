@@ -28,6 +28,8 @@
             <br/>
             <strong>Total delivery fee from <%= @count_of_sellers.to_s %> seller(s)</strong>
             <strong>$<%= number_with_precision(@total_delivery_cost, precision: 2) %></strong>
+            <br/>
+            <%= button_to 'Clear Cart', clear_cart_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
           <% end %>
           
           

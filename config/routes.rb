@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get '/cart_items', to: 'pages#home', as: 'cart_items'
   get '/show_cart', to: 'cart_items#show_cart', as: 'show_cart'
+  delete '/clear_cart', to: 'cart_items#clear_cart', as: 'clear_cart'
   post '/listings/:id', to: 'listings#add_to_cart', as: 'add_to_cart'
   resources :cart_items, except: [:new, :index, :edit, :update, :create, :show]
   resources :listings
