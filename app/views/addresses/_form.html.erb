@@ -1,5 +1,5 @@
 <%= form_with(url: query_for_address_path, method: "get") do |form| %>
-
+  <h4>For faster address entry, try and look up your address below!</h4>
   <% if !params[:id].nil? %>
     <%= hidden_field_tag(:id, params[:id])%>
   <% end %>
@@ -8,6 +8,10 @@
   <%= form.submit "Find Address" %>
 
 <% end %>
+
+<br/>
+<br/>
+<h4>Enter and confirm your address details below!</h4>
 
 <%= form_with(model: address) do |form| %>
   <% if address.errors.any? %>

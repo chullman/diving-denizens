@@ -46,6 +46,9 @@ class ListingsController < ApplicationController
     @current_listing_fee = ListingFee.all.order(valid_from: :desc).first
     @listing.listing_fee = @current_listing_fee
 
+    @listing.negotiable = false
+    @listing.deliverable = true
+    @listing.quantity = 1
   
     respond_to do |format|
       if @listing.save
@@ -67,8 +70,15 @@ class ListingsController < ApplicationController
 
   # PATCH/PUT /listings/1 or /listings/1.json
   def update
+
+    attributes = listing_params.clone
+    attributes[:negotiable] = false
+    attributes[:deliverable] = true
+    attributes[:quantity] = 1
+
+
     respond_to do |format|
-      if @listing.update(listing_params)
+      if @listing.update(attributes)
 
         # I know this isn't ideal, but I couldn't figure out how to use update in this instance for multiple possible categories on a relationship table
 

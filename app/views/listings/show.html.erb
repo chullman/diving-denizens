@@ -48,6 +48,15 @@
                 </div>
             </div>
             <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start mb-5">
+                <% if current_user.id == @listing.user_id %>
+                    <div class="alert alert-info" role="alert"><h5>INFO: This is your own listing.</h5></div>
+                <% elsif @listing.quantity == 1 %>
+                    <%= button_to 'ADD TO CART', cart_items_path, method: :get, class: "btn btn-success" %>
+                <% elsif @listing.quantity <= 0 %>
+                    <div class="alert alert-warning" role="alert"><h5>This listing has ALREADY SOLD :(</h5></div>
+                <% end %>
+            </div>
+            <div class="text-center text-md-start d-flex flex-column align-items-center align-items-md-start mb-5">
                 <%= link_to 'Back', listings_path %>
                 <br/>
                 <% if current_user.id == @listing.user_id %>

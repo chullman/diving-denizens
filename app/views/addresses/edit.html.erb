@@ -1,6 +1,10 @@
-<h1>Editing Address</h1>
+<div class="container">
+    <h1>Editing Address</h1>
 
-<%= render 'form', address: @address %>
+    <div class="alert alert-info" role="alert"><h4>For faster checkout! Add in your address details below that will be used for your default shipping address!</h4></div>
 
-<%= link_to 'Show', @address %> |
-<%= link_to 'Back', addresses_path %>
+    <%= render 'form', address: @address %>
+
+    <%= link_to 'Show', @address %> |
+    <%= link_to 'Back', addresses_path %>
+</div>
