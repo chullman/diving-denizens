@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get '/addresses/find_address', to: 'addresses#find_address', as: 'query_for_address'
+  get '/addresses/new', to: 'addresses#new', as: 'new_address'
+  
+  get '/addresses/:id', to: 'pages#home', as: 'address'
+  resources :addresses, except: [:index, :show, :new]
+
   get '/cart_items', to: 'pages#home', as: 'cart_items'
   get '/show_cart', to: 'cart_items#show_cart', as: 'show_cart'
   delete '/clear_cart', to: 'cart_items#clear_cart', as: 'clear_cart'
@@ -9,10 +15,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
 
-  get '/addresses/find_address', to: 'addresses#find_address', as: 'query_for_address'
-  get '/addresses', to: 'pages#home', as: 'addresses'
-  get '/addresses/:id', to: 'pages#home', as: 'address'
-  resources :addresses, except: [:index, :show]
+
 
   
 

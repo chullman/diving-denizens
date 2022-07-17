@@ -1,5 +1,5 @@
 class AddressesController < ApplicationController
-  before_action :get_existing_address, only: %i[ show edit update find_address ]
+  before_action :get_existing_user_address, only: %i[ show edit update find_address ]
   before_action :authenticate_user!, only: %i[ new show edit update ]
   before_action :authorize_user, only: %i[edit update ]
   
@@ -169,10 +169,13 @@ class AddressesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def get_existing_address
-      if !(params[:id].nil?) && !(params[:id].empty?)
-        @address = Address.find(params[:id]) 
+    def get_existing_user_address
+      if user_signed_in?
+        @address = Address.find_by(user_id: current_user.id)
       end
+      # if !(params[:id].nil?) && !(params[:id].empty?)
+      #   @address = Address.find(params[:id]) 
+      # end
     end
 
     def set_user_id_if_exists
