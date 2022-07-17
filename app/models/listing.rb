@@ -7,6 +7,8 @@ class Listing < ApplicationRecord
   has_many :listing_categories, dependent: :destroy 
   has_many :categories, through: :listing_categories
 
+  has_many :cart_items
+
   # Uses 'activestorage-validator' gem
   validates :images, presence: false, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 1..(10.megabytes) }
 

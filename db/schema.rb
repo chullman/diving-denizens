@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_16_004513) do
+ActiveRecord::Schema.define(version: 2022_07_17_053518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,8 +71,34 @@ ActiveRecord::Schema.define(version: 2022_07_16_004513) do
     t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
+  create_table "cart_items", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "listing_id", null: false
+    t.bigint "cart_num"
+    t.bigint "delivery_fee_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["delivery_fee_id"], name: "index_cart_items_on_delivery_fee_id"
+    t.index ["listing_id"], name: "index_cart_items_on_listing_id"
+    t.index ["user_id"], name: "index_cart_items_on_user_id"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "delivery_addresses", force: :cascade do |t|
+    t.bigint "address_id", null: false
+    t.bigint "cart_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["address_id"], name: "index_delivery_addresses_on_address_id"
+  end
+
+  create_table "delivery_fees", force: :cascade do |t|
+    t.decimal "fee_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -147,6 +173,10 @@ ActiveRecord::Schema.define(version: 2022_07_16_004513) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "postcodes", primary_key: "postcode"
   add_foreign_key "addresses", "users"
+  add_foreign_key "cart_items", "delivery_fees"
+  add_foreign_key "cart_items", "listings"
+  add_foreign_key "cart_items", "users"
+  add_foreign_key "delivery_addresses", "addresses"
   add_foreign_key "listing_categories", "categories"
   add_foreign_key "listing_categories", "listings"
   add_foreign_key "listings", "listing_fees"
