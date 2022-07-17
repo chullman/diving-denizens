@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  before_action :set_listing, only: %i[ show edit update destroy ]
+  before_action :set_listing, only: %i[ show edit update destroy add_to_cart ]
   before_action :authenticate_user!, only: %i[ new edit update destroy ]
   before_action :authorize_user, only: %i[edit update destroy]
 
@@ -18,6 +18,38 @@ class ListingsController < ApplicationController
       @listings.uniq!
     end
     
+  end
+
+  def add_to_cart
+    # See if the user already has an existing cart
+    user_cart = CartItem.where(user_id: current_user.id)
+
+    cart_item = CartItem.new
+
+    cart_item.user_id = current_user.id
+    cart_item.listing_id = @listing.id
+    cart_item.delivery_fee_id = DeliveryFee.all.first.id
+
+    if user_cart.empty?
+
+      # Reference: https://stackoverflow.com/a/63872518 (viewed 17/07/2022)
+      # on how to do random number gen
+      r = Random.new(Time.now.to_i) # adds a random seed, using current date time so number will/should always be unique in DB
+      cart_item.cart_num = r.rand(1000..10000)
+    
+    else
+      cart_item.cart_num = user_cart.first.cart_num
+
+    end
+
+    respond_to do |format|
+      if cart_item.save
+        format.html { redirect_to listings_path, notice: "Item added to cart!" }
+      else
+        format.html { redirect_to listings_path, alert: "Unable to add item to cart." }
+      end
+    end
+
   end
 
   # GET /listings/1 or /listings/1.json

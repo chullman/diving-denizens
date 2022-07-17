@@ -48,14 +48,14 @@ class AddressesController < ApplicationController
   end
 
   # GET /addresses or /addresses.json
-  def index
-    @addresses = Address.all
-  end
+  # def index
+  #   @addresses = Address.all
+  # end
 
   # GET /addresses/1 or /addresses/1.json
-  def show
-    @postcode = Postcode.find_by(postcode: @address.postcode_id)
-  end
+  # def show
+  #   @postcode = Postcode.find_by(postcode: @address.postcode_id)
+  # end
 
   # GET /addresses/new
   def new

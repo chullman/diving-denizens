@@ -110,7 +110,7 @@ new_rich_text.update(body: rich_text_content)
 listing_computer.images.attach(io: File.open(Rails.root.join("app", "assets", "images", "listing_computer1.jpg")), filename: 'listing_computer1.jpg', content_type: 'image/jpg')
 listing_computer.images.attach(io: File.open(Rails.root.join("app", "assets", "images", "listing_computer2.jpg")), filename: 'listing_computer2.jpg', content_type: 'image/jpg')
 
-
+DeliveryFee.create!(fee_price: 15.00)
 
 
 

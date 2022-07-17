@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2022_07_17_053518) do
   create_table "cart_items", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "listing_id", null: false
-    t.bigint "cart_num"
+    t.bigint "cart_num", null: false
     t.bigint "delivery_fee_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2022_07_17_053518) do
 
   create_table "delivery_addresses", force: :cascade do |t|
     t.bigint "address_id", null: false
-    t.bigint "cart_num"
+    t.bigint "cart_num", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["address_id"], name: "index_delivery_addresses_on_address_id"
