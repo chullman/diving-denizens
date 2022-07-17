@@ -95,9 +95,13 @@ Specifically:
 ### App Screenshots
 
 ![App Screenshot 1](./docs/app_screenshot1.png)
+
 ![App Screenshot 2](./docs/app_screenshot2.png)
+
 ![App Screenshot 3](./docs/app_screenshot3.png)
+
 ![App Screenshot 4](./docs/app_screenshot4.png)
+
 ![App Screenshot 5](./docs/app_screenshot5.png)
 
 ### Target Audience
